@@ -12,8 +12,8 @@
 using namespace std;
 
 // declare global variables to store tokens, and symbol table
-deque<pair<string,string>> tokens;
-unordered_map<string,pair<string,int>> sym_table;
+deque<pair<string,string>> tokens;                      //{{token type, token value}}
+unordered_map<string,pair<string,int>> sym_table;       //{{id, {type, value}}}   
 
 // identify the tokens from input (lexical analysis)
 bool getTokens(string input) {

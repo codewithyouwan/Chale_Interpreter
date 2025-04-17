@@ -4,13 +4,14 @@
 #include <limits.h>
 #include <vector>
 #include "lexer.h"
+#include "transition.h" // for performing transition at the start.
 using namespace std;
 
 // declare some global variables
 extern deque<pair<string,string>> tokens;
 extern unordered_map<string /*id*/ ,pair<string,int> /*(type,value)*/> sym_table;
 pair<string,string> curr_token;
-bool running_state;
+bool running_state;                     //to check if program is running or not
 
 // function to show errors
 void error(int code) {
@@ -323,8 +324,11 @@ bool exitProgram(){
     }
     else return false;
 }
-
-// execute a line and check for rule line -> exit | print | assignment
+/*
+    ->execute a line and check for rule line -> exit | print | assignment (declaration | initialisation | reassign)
+    {input}: line of code
+    {output}: stament line is valid or not.
+*/
 bool line(){
     running_state = true;
     curr_token = getToken();
@@ -334,7 +338,9 @@ bool line(){
 
 // main function
 int main(){
-    cout << "\nChale Interpreter 1.0.1\nType 'exit;' to terminate the program\n" << endl;
+    animateTitle();
+    cout << "\nChale Interpreter\n" << endl;
+    cout << "\nVersion 1.0.1\nType 'exit;' to terminate the program\n" << endl;
 
     // continuosly take input statement lines
     while (true){
